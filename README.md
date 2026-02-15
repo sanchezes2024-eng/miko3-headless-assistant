@@ -5,7 +5,8 @@ A standalone NLP & Speech server using [NLP.js](https://github.com) and [Vosk](h
 ## 🛠️ Server Setup
 1. Place your training data in `corpus-en.json`.
 2. Download a model from [Vosk Models](https://alphacephei.commodels) and unzip to a folder named `/model`.
-3. Start: `node server.js`
+3. Install: `npm install`
+4. Start: `node server.js`
 
 ## 🔌 How to Build a Client
 The server runs on [Socket.io](https://socket.io) at port `3000`.
