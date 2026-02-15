@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <button id="btn">Click to Speak</button>
+    <p id="status">Ready.</p>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const btn = document.getElementById('btn');
+        const status = document.getElementById('status');
+
+        // Speech-to-Text
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        
+        btn.onclick = () => {
+            recognition.start();
+            status.innerText = "Listening...";
+        };
+
+        recognition.onresult = (event) => {
+            const text = event.results[0][0].transcript;
+            status.innerText = "You said: " + text;
+            socket.emit('voice-input', text);
+        };
+
+        // Text-to-Speech
+        socket.on('voice-output', (answer) => {
+            const synth = window.speechSynthesis;
+            const utterance = new SpeechSynthesisUtterance(answer);
+            synth.speak(utterance);
+            status.innerText = "Assistant: " + answer;
+        });
+    </script>
+</body>
+</html>
